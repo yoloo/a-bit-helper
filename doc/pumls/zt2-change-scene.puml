@@ -1,0 +1,115 @@
+@startuml
+
+title 角色移动时序图
+
+participant Gate2
+participant Scene1
+participant Gate1
+participant Client
+
+Scene1 --> Scene1 : SceneUser::move()
+activate Scene1 #FFBBBB
+
+Scene1 --> Scene1 : 1.showPathEffect()
+activate Scene1 #DarkSalmon
+deactivate Scene1
+
+Scene1 --> Scene1 : 2.on_move()
+activate Scene1 #DarkSalmon
+deactivate Scene1
+
+Scene1 --> Scene1 : \n<<Cmd::stUserMoveMoveUserCmd>> \nscene->sendCmdToNine()
+activate Scene1 #DarkSalmon
+deactivate Scene1
+
+Scene1 --> Scene1 : 3.scene->refresh()
+note over Scene1 : 切屏时通知自己网关
+activate Scene1 #DarkSalmon
+    Scene1 -->> Scene1 : 4.freshEffectPosi()
+    activate Scene1
+    deactivate Scene1
+
+    Scene1 -->> Scene1 : 5.freshGateScreenIndex()
+    activate Scene1
+        Scene1 -> Gate1 : 6.Cmd::Scene::t_fresh_ScreenIndex
+    deactivate Scene1
+deactivate Scene1
+
+activate Gate1 #FFBBBB
+    Gate1 --> Gate1 : <<-1>> \n6-1.SceneClient::removeIndex()
+    activate Gate1 #DarkSalmon
+    deactivate Gate1
+
+    Gate1 --> Gate1 : 6-1.SceneClient::refreshIndex()
+    activate Gate1 #DarkSalmon
+    deactivate Gate1
+deactivate
+
+Scene1 --> Scene1 : 7.\n<<Cmd::stRemoveUserMapScreen>> \nscene->sendCmdToReverseDirect()
+note over Scene1 : 别人看我->通过网关查找反向屏角色，删除自己(广播)
+activate Scene1 #DarkSalmon
+    Scene1 --> Gate2 : 8.Cmd::Scene::t_Nine_rdir_ForwardScene
+    Scene1 -> Gate1 : 8.Cmd::Scene::t_Nine_rdir_ForwardScene
+deactivate Scene1
+
+activate Gate1 #FFBBBB
+    Gate1 --> Gate1 : 8-1.ScreenIndex::sendCmdToReverseDirect()
+    activate Gate1 #DarkSalmon
+        Gate1 -> Client : Cmd::stRemoveUserMapScreen
+    deactivate Gate1
+deactivate
+
+Scene1 --> Scene1 : 9.sendMeToNineDriect()
+note over Scene1 : 别人看我->通过网关查找正向屏角色，添加自己(广播)
+activate Scene1 #DarkSalmon
+    Scene1 -->> Scene1 : 10.\n<<Cmd::stAddUserAndPosMapScreenStateUserCmd>> \nscene->sendCmdToDirect()
+    activate Scene1
+        Scene1 --> Gate2 : 11.Cmd::Scene::t_Nine_dir_ForwardScene
+        Scene1 -> Gate1 : 11.Cmd::Scene::t_Nine_dir_ForwardScene
+    deactivate Scene1
+deactivate Scene1
+
+activate Gate1 #FFBBBB
+    Gate1 --> Gate1 : 11-1.ScreenIndex::sendCmdToDirect()
+    activate Gate1 #DarkSalmon
+        Gate1 -> Client : Cmd::stAddUserAndPosMapScreenStateUserCmd
+    deactivate
+deactivate Gate1
+
+
+Scene1 --> Scene1 : 12.removeEntries()
+note over Scene1 : 我看别人->通过场景查找反向屏角色，删除它们
+activate Scene1 #DarkSalmon
+    Scene1 -->> Scene1 : 13.\n<<Cmd::stBatchRemoveUserMapScreenUserCmd>> \nuser->sendCmdToMe()
+    activate Scene1
+        Scene1 --> Gate2 : 14.Cmd::Scene::t_User_ForwardScene
+        Scene1 -> Gate1 : 14.Cmd::Scene::t_User_ForwardScene
+    deactivate Scene1
+deactivate Scene1
+
+activate Gate1 #FFBBBB
+    Gate1 --> Gate1 : 14-1.GateUser::sendCmd()
+    activate Gate1 #DarkSalmon
+        Gate1 -> Client : Cmd::stBatchRemoveUserMapScreenUserCmd
+    deactivate Gate1
+deactivate Gate1
+
+Scene1 --> Scene1 : 15.sendNineToMeDirect()
+note over Scene1 : 我看别人->通过场景查找正向屏角色，添加它们
+activate Scene1 #DarkSalmon
+    Scene1 -->> Scene1 : 16.\n<<Cmd::stMapDataMapScreenUserCmd>> \nuser->sendCmdToMe()
+    activate Scene1
+        Scene1 --> Gate2 : 17.Cmd::Scene::t_User_ForwardScene
+        Scene1 -> Gate1 : 17.Cmd::Scene::t_User_ForwardScene
+    deactivate Scene1
+deactivate Scene1
+
+activate Gate1 #FFBBBB
+    Gate1 --> Gate1 : 17-1.GateUser::sendCmd()
+    activate Gate1 #DarkSalmon
+        Gate1 -> Client : Cmd::stMapDataMapScreenUserCmd
+    deactivate Gate1
+deactivate Gate1
+
+deactivate Scene1
+@enduml

@@ -1,0 +1,63 @@
+@startuml
+
+title 消息队列类图
+
+'0.#Moccasin
+'1.#LightSeaGreen
+'2.#DarkSalmon
+'3.#BBBBFF
+'4.#SkyBlue
+'5.#LightPink
+'6.#CadetBlue
+'7.#Violet
+
+class MessageQueue {
+    // 队列
+    - MsgQueue<> cmdQueue;
+
+    // 缓存当前处理的消息
+    - char _cmdBuf_[zSocket::MAX_DATASIZE];
+    - uint32_t _cmdLen_;
+
+    --
+    // 生产
+    {method} bool msgParse(const Cmd::t_NullCmd* cmd, const uint32_t cmdLen);
+
+    // 消费所有
+    {method} bool doCmd();
+    // 消费N条(102400)
+    {method} bool doCmdT();
+    __
+
+    // 消息处理
+    virtual bool cmdMsgParse(const Cmd::t_NullCmd* cmd, const uint32_t cmdLen) = 0;
+}
+
+class MsgQueue<QueueSize=102400> {
+    // 环形队列
+    <是否可写, 消息长度, 消息缓冲区指针>
+    - std::pair<volatile bool, std::pair<uint32_t, uint32_t>> cmdQueue[QueueSize];
+
+    // 缓冲队列
+    <消息长度， 消息缓冲区指针>
+    - std::queue<std::pair<uint32_t, uint32_t>, std::deque<std::pair<uint32_t, uint32_t>>> queueCmd;
+
+    - uint32_t queueWrite;
+    - uint32_t queueRead;
+    __
+
+    // 压入消息
+    1.环形队列可用(写)，加入环形队列(cmdQueue)；
+    2.环形队列不可用（写），加入缓冲队列(queueCmd)；
+    bool put(const Cmd::t_NullCmd* cmd, const uint32_t cmdLen);
+
+    // 获取消息（环形队列）
+    std::pair<uint32_t, uint32_t>* get();
+
+    //删除消息（环形队列）
+    void erase();
+}
+
+MessageQueue *--> MsgQueue
+
+@enduml

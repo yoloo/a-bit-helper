@@ -1,0 +1,11 @@
+build/*
+!build/.git-keep
+
+bin/*
+!bin/.git-keep
+
+include/*
+!include/.git-keep
+
+lib/*
+!lib/.git-keep
