@@ -1,11 +1,9 @@
 cmake_minimum_required(VERSION 3.2)
 
-project(divider_tests)
-
-add_subdirectory(lib/googletest)
+project(test)
 
 include_directories(${DIVISION_HEADERS_DIR})
-include_directories(lib/googletest/googletest/include)
+include_directories(thirdparty/googletest/googletest/include)
 
 set(SOURCE_FILES main.cpp division/divider_tests.cpp)
 
