@@ -1,6 +1,8 @@
 [submodule "thirdparty/googletest"]
 	path = thirdparty/googletest
 	url = https://github.com/google/googletest.git
+    ignore = dirty
 [submodule "thirdparty/gbenchmark"]
 	path = thirdparty/gbenchmark
 	url = https://github.com/google/benchmark.git
+    ignore = dirty
