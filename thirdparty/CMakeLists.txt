@@ -3,3 +3,4 @@ cmake_minimum_required(VERSION 3.2)
 project(thirdparty)
 
 add_subdirectory(googletest)
+add_subdirectory(gbenchmark)
