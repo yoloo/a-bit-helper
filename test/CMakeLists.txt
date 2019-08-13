@@ -11,4 +11,3 @@ add_executable(divider_tests ${SOURCE_FILES})
 target_link_libraries(divider_tests division gtest)
 
 install(TARGETS divider_tests DESTINATION bin)
-

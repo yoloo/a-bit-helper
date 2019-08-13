@@ -9,5 +9,4 @@ set(SOURCE_FILES string_bench.cpp)
 add_executable(string_bench ${SOURCE_FILES})
 target_link_libraries(string_bench benchmark)
 
-install(TARGETS divider_tests DESTINATION bin)
-
+install(TARGETS string_bench DESTINATION bin)
