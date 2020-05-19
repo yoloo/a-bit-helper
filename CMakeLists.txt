@@ -1,15 +1,10 @@
 cmake_minimum_required(VERSION 3.2)
-
 project(study-a-bit)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3 -fPIC")
 
-set(INSTALL_BIN_DIR ${PROJECT_SOURCE_DIR}/bin)
-set(INSTALL_LIB_DIR ${PROJECT_SOURCE_DIR}/lib)
-set(INSTALL_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
-
-include_directories(${INSTALL_INCLUDE_DIR})
+include_directories(include)
 
 add_subdirectory(src)
 add_subdirectory(test)
