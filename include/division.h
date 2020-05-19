@@ -2,8 +2,8 @@
 // Created by zhaoyongle on 2020/5/19.
 //
 
-#ifndef STUDY_A_BIT_DIVISION_H
-#define STUDY_A_BIT_DIVISION_H
+#ifndef A_BIT_HELPER_DIVISION_H
+#define A_BIT_HELPER_DIVISION_H
 
 static const char *const DIVISION_BY_ZERO_MESSAGE = "Division by zero is illegal";
 
@@ -58,4 +58,4 @@ namespace Division {
     };
 }
 
-#endif //STUDY_A_BIT_DIVISION_H
+#endif //A_BIT_HELPER_DIVISION_H
