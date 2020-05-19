@@ -1,3 +1,5 @@
 file(GLOB_RECURSE SOURCE_FILES *.cpp)
 
+set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
+
 add_library(leetcode STATIC ${SOURCE_FILES})
