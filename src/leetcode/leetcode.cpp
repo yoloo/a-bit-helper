@@ -23,8 +23,9 @@ namespace LeetCode {
             }
 
             std::vector<int> two(const std::vector<int> &nums, int target) {
-                for (int i = 0; i < nums.size(); ++i) {
-                    for (int j = 0; j < i + 1; ++j) {
+                int len = nums.size();
+                for (int i = 0; i < len; ++i) {
+                    for (int j = i + 1; j < len; ++j) {
                         if (nums[i] + nums[j] == target)
                             return {i, j};
                     }

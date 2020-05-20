@@ -5,25 +5,48 @@
 #include "leetcode/leetcode.h"
 #include "gtest/gtest.h"
 
-// twoSum1
-TEST(ArrayTestCase, twoSum1_01)
-{
-    std::vector<int> target{0, 1};
-    std::vector<int> result = LeetCode::Array::TwoSum::one({2, 7, 11, 15}, 9);
+// 1. 两数之和
 
-    for (int i = 0; i < result.size(); ++i) {
-        EXPECT_EQ(target[i], result[i]);
+auto verifyTwoSum = [](const std::vector<int>& expect, const std::vector<int>& actual) -> bool {
+    if (expect.size() != actual.size())
+        return false;
+
+    for (int i = 0; i < actual.size(); ++i) {
+        if (expect[i] != actual[i])
+            return false;
     }
+
+    return true;
+};
+
+TEST(ArrayTestCase, TwoSum_One_Find)
+{
+    ASSERT_TRUE(verifyTwoSum({0, 1}, LeetCode::Array::TwoSum::one({2, 7, 11, 15}, 9)));
+    ASSERT_TRUE(verifyTwoSum({1, 2}, LeetCode::Array::TwoSum::one({2, 7, -2, 15}, 5)));
+    ASSERT_TRUE(verifyTwoSum({1, 2}, LeetCode::Array::TwoSum::one({2, 7, -8, 15}, -1)));
+    ASSERT_TRUE(verifyTwoSum({2, 3}, LeetCode::Array::TwoSum::one({2, 7, -11, -15}, -26)));
 }
 
-TEST(ArrayTestCase, twoSum1_02)
+TEST(ArrayTestCase, TwoSum_One_NotFind)
 {
-    std::vector<int> target{0, 1};
-    std::vector<int> result = LeetCode::Array::TwoSum::two({2, 7, 11, 15}, 20);
+    EXPECT_TRUE(verifyTwoSum({}, LeetCode::Array::TwoSum::one({}, 6)));
+    EXPECT_TRUE(verifyTwoSum({}, LeetCode::Array::TwoSum::one({6}, 6)));
+    EXPECT_TRUE(verifyTwoSum({}, LeetCode::Array::TwoSum::one({2, 7, 11, 15}, 6)));
+}
 
-    for (int i = 0; i < result.size(); ++i) {
-        EXPECT_EQ(target[i], result[i]);
-    }
+TEST(ArrayTestCase, TwoSum_Two_Find)
+{
+    ASSERT_TRUE(verifyTwoSum({0, 1}, LeetCode::Array::TwoSum::two({2, 7, 11, 15}, 9)));
+    ASSERT_TRUE(verifyTwoSum({1, 2}, LeetCode::Array::TwoSum::two({2, 7, -2, 15}, 5)));
+    ASSERT_TRUE(verifyTwoSum({1, 2}, LeetCode::Array::TwoSum::two({2, 7, -8, 15}, -1)));
+    ASSERT_TRUE(verifyTwoSum({2, 3}, LeetCode::Array::TwoSum::two({2, 7, -11, -15}, -26)));
+}
+
+TEST(ArrayTestCase, TwoSum_Two_NotFind)
+{
+    EXPECT_TRUE(verifyTwoSum({}, LeetCode::Array::TwoSum::two({}, 6)));
+    EXPECT_TRUE(verifyTwoSum({}, LeetCode::Array::TwoSum::two({6}, 6)));
+    EXPECT_TRUE(verifyTwoSum({}, LeetCode::Array::TwoSum::two({2, 7, 11, 15}, 6)));
 }
 
 int main(int argc, char *argv[]) {
