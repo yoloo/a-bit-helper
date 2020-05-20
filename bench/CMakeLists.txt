@@ -9,5 +9,8 @@ target_link_libraries(memcpy_bench benchmark)
 add_executable(memset_bench memset_bench.cpp)
 target_link_libraries(memset_bench benchmark)
 
+add_executable(array_bench array_bench.cpp)
+target_link_libraries(array_bench benchmark)
+
 add_executable(leetcode_bench leetcode_bench.cpp)
 target_link_libraries(leetcode_bench leetcode benchmark)
