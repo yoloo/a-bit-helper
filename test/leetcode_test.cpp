@@ -2,7 +2,7 @@
 // Created by zhaoyongle on 2020/5/20.
 //
 
-#include "leetcode.h"
+#include "leetcode/leetcode.h"
 #include "gtest/gtest.h"
 
 // twoSum1

@@ -1,4 +1,4 @@
-#include "leetcode.h"
+#include "leetcode/leetcode.h"
 
 #include <iostream>
 

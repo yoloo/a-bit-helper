@@ -1,7 +1,7 @@
 //
 // Created by Konstantin Gredeskoul on 5/16/17.
 //
-#include "division.h"
+#include "division/division.h"
 #include "gtest/gtest.h"
 
 class DividerTest : public ::testing::Test
