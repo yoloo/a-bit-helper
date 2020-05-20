@@ -1,4 +1,4 @@
-#include <benchmark/benchmark.h>
+#include "benchmark/benchmark.h"
 
 static void BM_StringCreation(benchmark::State& state) {
     for (auto _ : state)
@@ -14,5 +14,4 @@ static void BM_StringCopy(benchmark::State& state) {
         std::string copy(x);
 }
 BENCHMARK(BM_StringCopy);
-
 BENCHMARK_MAIN();
