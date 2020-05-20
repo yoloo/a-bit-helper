@@ -1,6 +1,7 @@
 include_directories(thirdparty/googletest/googletest/include)
 
-file(GLOB_RECURSE SOURCE_FILES *.cpp)
+add_executable(divider_test divider_test.cpp)
+target_link_libraries(divider_test division gtest)
 
-add_executable(divider_tests ${SOURCE_FILES})
-target_link_libraries(divider_tests division gtest)
+add_executable(leetcode_test leetcode_test.cpp)
+target_link_libraries(leetcode_test leetcode gtest)
