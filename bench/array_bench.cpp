@@ -3,12 +3,13 @@
 //
 
 #include "benchmark/benchmark.h"
+#include <array>
 
 constexpr int len = 6;
 
 static void bench_array_operator(benchmark::State& state)
 {
-    std::array<int, len> arr;
+    std::array<int, 6> arr;
     constexpr int i = 1;
     for (auto _: state) {
         arr[0] = i;
