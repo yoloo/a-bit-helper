@@ -13,12 +13,13 @@ namespace LeetCode
     namespace Array
     {
         //1. 两数之和
+        namespace TwoSum {
+            //a.一次哈希
+            std::vector<int> one(const std::vector<int>& nums, int target);
 
-        //a.一次哈希
-        std::vector<int> twoSum_1(const std::vector<int>& nums, int target);
-
-        //b.暴力破解
-        std::vector<int> twoSum_2(const std::vector<int>& nums, int target);
+            //b.暴力破解
+            std::vector<int> two(const std::vector<int>& nums, int target);
+        }
     };
 
     // 链表
