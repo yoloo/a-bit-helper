@@ -4,52 +4,50 @@
 
 #include "benchmark/benchmark.h"
 #include <array>
+#include <iostream>
 
-constexpr int len = 6;
+constexpr int len = 1000;
+
+auto args = [](benchmark::internal::Benchmark* bm) {
+    for (int i = 10; i <= 20; ++i) {
+        //bm->Args({i});
+        bm->Arg(i);
+    }
+};
 
 static void bench_array_operator(benchmark::State& state)
 {
-    std::array<int, 6> arr;
-    constexpr int i = 1;
-    for (auto _: state) {
-        arr[0] = i;
-        arr[1] = i + 1;
-        arr[2] = i + 2;
-        arr[3] = i + 3;
-        arr[4] = i + 4;
-        arr[5] = i + 5;
+    std::array<int, len> arr{};
+    //uint64_t counter = 0;
+    while (state.KeepRunning()) {
+        //++counter;
+        for (int i = 0; i < state.range(0); ++i) {
+            arr[i] = i + 1;
+        }
     }
+
+    //std::cout << "Output: " << counter << " Arg: " << state.range(0) << std::endl;
 }
-BENCHMARK(bench_array_operator);
+BENCHMARK(bench_array_operator)->Args({500})->Iterations(1000);
+//BENCHMARK(bench_array_operator)->Args({10})->Repetitions(10);
+//BENCHMARK(bench_array_operator)->Arg(100)->Arg(1000);
+//BENCHMARK(bench_array_operator)->Range(1, 1000);
+//BENCHMARK(bench_array_operator)->RangeMultiplier(2)->Range(1, 1000);
+//BENCHMARK(bench_array_operator)->Apply(args);
 
 static void bench_array_at(benchmark::State& state)
 {
-    std::array<int, len> arr;
-    constexpr int i = 1;
+    std::array<int, len> arr{};
     for (auto _: state) {
-        arr.at(0) = i;
-        arr.at(1) = i + 1;
-        arr.at(2) = i + 2;
-        arr.at(3) = i + 3;
-        arr.at(4) = i + 4;
-        arr.at(5) = i + 5;
+        for (int i = 0; i < state.range(0); ++i) {
+            arr.at(0) = i + 1;
+        }
     }
 }
-BENCHMARK(bench_array_at);
-
-static void bench_array_get(benchmark::State& state)
-{
-    std::array<int, len> arr;
-    constexpr int i = 1;
-    for (auto _: state) {
-        std::get<0>(arr) = i;
-        std::get<1>(arr) = i + 1;
-        std::get<2>(arr) = i + 2;
-        std::get<3>(arr) = i + 3;
-        std::get<4>(arr) = i + 4;
-        std::get<5>(arr) = i + 5;
-    }
-}
-BENCHMARK(bench_array_get)->Iterations(1000000000);
+/*BENCHMARK(bench_array_operator)->Args({500})->Unit(benchmark::kNanosecond);
+BENCHMARK(bench_array_operator)->Arg(100)->Arg(1000)->Unit(benchmark::kMicrosecond);
+BENCHMARK(bench_array_operator)->Range(1, 1000)->Unit(benchmark::kMillisecond);
+BENCHMARK(bench_array_operator)->RangeMultiplier(2)->Range(1, 1000);
+BENCHMARK(bench_array_operator)->Apply(args);*/
 
 BENCHMARK_MAIN();

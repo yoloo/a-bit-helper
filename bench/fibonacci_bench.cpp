@@ -4,32 +4,58 @@
 
 #include "benchmark/benchmark.h"
 
+#include <cmath>
 #include <algorithm>
+#include <ostream>
 
-size_t fibonacci(size_t n)
+uint64_t fibonacci_1(uint64_t limit)
 {
-    if (!n)
+    if (!limit)
         return 0;
 
-    size_t a = 1;
-    size_t b = 1;
-    for (int i = 0; i < n; ++i) {
-        std::swap(a, b);
+    uint64_t fir = 1;
+    uint64_t sec = 1;
+    for (int i = 0; i < limit; ++i) {
+        std::swap(fir, sec);
 
-        b += a;
+        sec += fir;
     }
 
-    return b;
+    return sec;
 }
 
-static void BM_Fibonacci(benchmark::State& state)
+uint64_t finonacci_2(uint64_t limit)
 {
-    size_t ret = 0;
+    if (0 == limit)
+        return 0;
+
+    if (1 == limit)
+        return 1;
+
+    return finonacci_2(limit - 1) + finonacci_2(limit - 2);
+}
+
+static void BM_Fibonacci_1(benchmark::State& state)
+{
+    uint64_t ret = 0;
     while (state.KeepRunning())
     {
-        ret |= fibonacci(state.range_x());
+        ret |= fibonacci_1(state.range(0));
     }
 }
-BENCHMARK(BM_Fibonacci)->Arg(5)->Arg(42)->Arg(87);
+BENCHMARK(BM_Fibonacci_1)->RangeMultiplier(2)->Range(1, 1 << 5);
+
+static void BM_Finonacci_2(benchmark::State& state)
+{
+    uint64_t ret = 0;
+    while (state.KeepRunning())
+    {
+        benchmark::DoNotOptimize(ret = finonacci_2(state.range(0)));
+    }
+
+    std::ostream cnull(nullptr);
+    cnull << ret;
+}
+BENCHMARK(BM_Finonacci_2)->RangeMultiplier(2)->Range(1, 1 << 5);
 
 BENCHMARK_MAIN();
