@@ -29,11 +29,11 @@ static void bench_array_operator(benchmark::State& state)
     //std::cout << "Output: " << counter << " Arg: " << state.range(0) << std::endl;
 }
 BENCHMARK(bench_array_operator)->Args({500})->Iterations(1000);
-//BENCHMARK(bench_array_operator)->Args({10})->Repetitions(10);
-//BENCHMARK(bench_array_operator)->Arg(100)->Arg(1000);
-//BENCHMARK(bench_array_operator)->Range(1, 1000);
-//BENCHMARK(bench_array_operator)->RangeMultiplier(2)->Range(1, 1000);
-//BENCHMARK(bench_array_operator)->Apply(args);
+BENCHMARK(bench_array_operator)->Args({10})->Repetitions(10);
+BENCHMARK(bench_array_operator)->Arg(100)->Arg(1000);
+BENCHMARK(bench_array_operator)->Range(1, 1000);
+BENCHMARK(bench_array_operator)->RangeMultiplier(2)->Range(1, 1000);
+BENCHMARK(bench_array_operator)->Apply(args);
 
 static void bench_array_at(benchmark::State& state)
 {
