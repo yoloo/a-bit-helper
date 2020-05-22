@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.2)
 project(a-bit-helper)
 
-#set(BENCHMARK_ENABLE_TESTING off)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3 -fPIC")
+set(BENCHMARK_ENABLE_TESTING off)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g -fPIC")
 
 set(INSTALL_BIN_DIR ${PROJECT_SOURCE_DIR}/bin)
 set(INSTALL_LIB_DIR ${PROJECT_SOURCE_DIR}/lib)
