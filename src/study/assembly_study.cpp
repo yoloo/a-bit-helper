@@ -2,11 +2,20 @@
 // Created by zhaoyongle on 2020/5/22.
 //
 
-int func1(int a) {
-    return 2 * a;
+#include <cstdio>
+
+int sum(int a, int b)
+{
+    int s = a + b;
+
+    return s;
 }
 
-int main() {
-    int ret = func1(2);
+
+int main(int argc, char* argv[]) {
+    int n = sum(1, 2);
+
+    printf("n: %d\n", n);
+
     return 0;
 }
