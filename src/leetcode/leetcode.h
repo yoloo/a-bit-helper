@@ -23,6 +23,20 @@ namespace LeetCode
     };
 
     // 链表
+    namespace LinkedList {
+        //24. 反转链表
+        namespace ReverseLinkedList {
+            struct ListNode {
+                int val;
+                ListNode* next;
+
+                ListNode(int x) : val(x), next(nullptr) {}
+            };
+
+            // a.迭代
+            ListNode* one(ListNode* head);
+        }
+    }
 };
 
 #endif //A_BIT_HELPER_LEET_CODE_H

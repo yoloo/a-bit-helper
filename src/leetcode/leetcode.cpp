@@ -35,4 +35,27 @@ namespace LeetCode {
             }
         }
     }
+
+    namespace LinkedList {
+        namespace ReverseLinkedList {
+            ListNode* one(ListNode* head) {
+                if (nullptr == head || nullptr == head->next)
+                    return head;
+
+                ListNode* prev = nullptr;
+                ListNode* cur  = head;
+                ListNode* next = nullptr;
+                while (cur != nullptr) {
+                    next = cur->next;
+                    cur->next = prev;
+                    prev = cur;
+
+                    cur = next;
+                }
+
+                return prev;
+            }
+        }
+    }
+
 }
