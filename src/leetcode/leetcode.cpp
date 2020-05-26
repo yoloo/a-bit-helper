@@ -44,9 +44,8 @@ namespace LeetCode {
 
                 ListNode* prev = nullptr;
                 ListNode* cur  = head;
-                ListNode* next = nullptr;
                 while (cur != nullptr) {
-                    next = cur->next;
+                    auto next = cur->next;
                     cur->next = prev;
                     prev = cur;
 
@@ -54,6 +53,17 @@ namespace LeetCode {
                 }
 
                 return prev;
+            }
+
+            ListNode* two(ListNode* head) {
+                if (nullptr == head || nullptr == head->next)
+                    return head;
+
+                auto cur = two(head->next);
+                head->next->next = head;
+                head->next       = nullptr;
+
+                return cur;
             }
         }
     }

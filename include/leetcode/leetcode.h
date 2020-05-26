@@ -33,8 +33,11 @@ namespace LeetCode
                 ListNode(int x) : val(x), next(nullptr) {}
             };
 
-            // a.迭代
+            // a.双指针迭代
             ListNode* one(ListNode* head);
+
+            // b.递归实现
+            ListNode* two(ListNode* head);
         }
     }
 };
