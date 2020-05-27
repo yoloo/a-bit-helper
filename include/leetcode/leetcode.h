@@ -24,15 +24,15 @@ namespace LeetCode
 
     // 链表
     namespace LinkedList {
-        //24. 反转链表
+        struct ListNode {
+            int val;
+            ListNode* next;
+
+            ListNode(int x) : val(x), next(nullptr) {}
+        };
+
+        //面试题-24. 反转链表
         namespace ReverseLinkedList {
-            struct ListNode {
-                int val;
-                ListNode* next;
-
-                ListNode(int x) : val(x), next(nullptr) {}
-            };
-
             // a.双指针迭代
             ListNode* one(ListNode* head);
 
@@ -41,6 +41,12 @@ namespace LeetCode
 
             // c.暴力破解
             ListNode* three(ListNode* head);
+        }
+
+        //24. 两两交换链表相邻节点
+        namespace SwapPairsLinkedList {
+            // a.双指针迭代
+            ListNode* one(ListNode* head);
         }
     }
 };

@@ -87,6 +87,25 @@ namespace LeetCode {
                 return head;
             }
         }
+
+        namespace SwapPairsLinkedList {
+            ListNode* one(ListNode* head) {
+                if (nullptr == head || nullptr == head->next)
+                    return head;
+
+                auto cur  = head;
+                auto next = cur->next;
+                while (cur != nullptr && next != nullptr) {
+                    std::swap(cur->val, next->val);
+
+                    cur  = next->next;
+                    if (cur != nullptr)
+                        next = cur->next;
+                }
+
+                return head;
+            }
+        }
     }
 
 }
