@@ -12,16 +12,19 @@ namespace Example01 {
 }
 
 namespace Example24 {
-    auto initLinkedList = []() -> LeetCode::LinkedList::ReverseLinkedList::ListNode* {
+    auto initLinkedList = [](int len) -> LeetCode::LinkedList::ReverseLinkedList::ListNode* {
+        if (!len)
+            return nullptr;
+
         int i = 1;
         auto head = new LeetCode::LinkedList::ReverseLinkedList::ListNode(i);
 
         auto cur = head;
-        do {
-            auto node = new LeetCode::LinkedList::ReverseLinkedList::ListNode(++i);
-            cur->next = node;
-            cur = cur->next;
-        } while (i < 5);
+        while (i < len)
+        {
+            cur->next = new LeetCode::LinkedList::ReverseLinkedList::ListNode(++i);
+            cur       = cur->next;
+        }
 
         return head;
     };
@@ -35,28 +38,38 @@ namespace Example24 {
             std::cout << "Node: " << cur->val << std::endl;
             cur = cur->next;
         }
+
+        std::cout << std::endl;
     };
 
     void test1() {
-        auto head = initLinkedList();
+        auto head = initLinkedList(10);
         dumpLinkedList(head);
 
         dumpLinkedList(LeetCode::LinkedList::ReverseLinkedList::one(head));
     }
 
     void test2() {
-        auto head = initLinkedList();
+        auto head = initLinkedList(10);
         dumpLinkedList(head);
 
         dumpLinkedList(LeetCode::LinkedList::ReverseLinkedList::two(head));
+    }
+
+    void test3() {
+        auto head = initLinkedList(3);
+        dumpLinkedList(head);
+
+        dumpLinkedList(LeetCode::LinkedList::ReverseLinkedList::three(head));
     }
 }
 
 int main() {
     //Example01::test1();
 
-    Example24::test1();
-    Example24::test2();
+    //Example24::test1();
+    //Example24::test2);
+    Example24::test3();
 
     return 0;
 }

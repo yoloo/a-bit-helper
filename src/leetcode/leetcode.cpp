@@ -65,6 +65,27 @@ namespace LeetCode {
 
                 return cur;
             }
+
+            ListNode* three(ListNode* head) {
+                if (nullptr == head || nullptr == head->next)
+                    return head;
+
+                std::vector<ListNode*> addrs;
+
+                auto cur = head;
+                while (cur != nullptr) {
+                    addrs.push_back(cur);
+
+                    cur = cur->next;
+                }
+
+                size_t half = addrs.size() / 2;
+                for (size_t i = 0; i < half; ++i) {
+                    std::swap(addrs.at(i)->val, addrs.at(addrs.size() - 1 - i)->val);
+                }
+
+                return head;
+            }
         }
     }
 

@@ -38,6 +38,9 @@ namespace LeetCode
 
             // b.递归实现
             ListNode* two(ListNode* head);
+
+            // c.暴力破解
+            ListNode* three(ListNode* head);
         }
     }
 };
