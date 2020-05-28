@@ -75,6 +75,13 @@ namespace Example24 {
         dumpLinkedList(LeetCode::LinkedList::SwapPairsLinkedList::one(head));
     }
 
+    void test2() {
+        auto head = initLinkedList(3);
+        dumpLinkedList(head);
+
+        dumpLinkedList(LeetCode::LinkedList::SwapPairsLinkedList::two(head));
+    }
+
 }
 
 int main() {
@@ -85,6 +92,7 @@ int main() {
     //ExampleInterview24::test3();
 
     Example24::test1();
+    Example24::test2();
 
     return 0;
 }

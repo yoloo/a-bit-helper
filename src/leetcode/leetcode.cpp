@@ -105,6 +105,19 @@ namespace LeetCode {
 
                 return head;
             }
+
+            ListNode* two(ListNode* head) {
+                if (nullptr == head || nullptr == head->next)
+                    return head;
+
+                auto next = head->next;
+                next->next = two(next->next);
+
+                head->next = next->next;
+                next->next = head;
+
+                return next;
+            }
         }
     }
 

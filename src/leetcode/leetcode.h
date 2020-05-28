@@ -45,8 +45,11 @@ namespace LeetCode
 
         //24. 两两交换链表相邻节点
         namespace SwapPairsLinkedList {
-            // a.双指针迭代
+            // a.双指针迭代(相邻节点交换val)
             ListNode* one(ListNode* head);
+
+            // b.双指针迭代(重构next)
+            ListNode* two(ListNode* head);
         }
     }
 };
