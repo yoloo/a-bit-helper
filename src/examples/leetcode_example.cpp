@@ -12,6 +12,8 @@ namespace Example01 {
     }
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
 auto initLinkedList = [](int len) -> LeetCode::LinkedList::ListNode* {
     if (!len)
         return nullptr;
@@ -41,6 +43,8 @@ auto dumpLinkedList = [](const LeetCode::LinkedList::ListNode* head) {
 
     std::cout << std::endl;
 };
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 // 面试题-24
 namespace ExampleInterview24 {
@@ -84,6 +88,81 @@ namespace Example24 {
 
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+auto initCycleLinkedList = [](const std::initializer_list<int>& vals, int pos) -> LeetCode::LinkedList::ListNode* {
+    if (!vals.size())
+        return nullptr;
+
+    LeetCode::LinkedList::ListNode* head  = nullptr;
+    LeetCode::LinkedList::ListNode* next  = nullptr;
+
+    LeetCode::LinkedList::ListNode* cycle = nullptr;
+
+    int idx = 0;
+    LeetCode::LinkedList::ListNode* cur = head;
+    for (const auto& item : vals) {
+        next = new LeetCode::LinkedList::ListNode(item);
+
+        if (pos == idx) {
+            cycle = next;
+        }
+        ++idx;
+
+        if (head != nullptr) {
+            cur->next = next;
+            cur = cur->next;
+        }
+        else {
+            cur = head = next;
+            cur->next  = nullptr;
+        }
+    }
+
+    if (next != nullptr && cycle != nullptr) {
+        next->next = cycle;
+    }
+
+    return head;
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+// 141
+namespace Example141 {
+    void test1() {
+        bool hasCycle = LeetCode::LinkedList::HasCycleLinkedList::one(initCycleLinkedList({3, 2, 0, -4}, 1));
+        if (hasCycle)
+            std::cout << "有环" << std::endl;
+        else
+            std::cout << "无环" << std::endl;
+    }
+
+    void test2() {
+        bool hasCycle = LeetCode::LinkedList::HasCycleLinkedList::one(initCycleLinkedList({3, 2, 0, -4}, -1));
+        if (hasCycle)
+            std::cout << "有环" << std::endl;
+        else
+            std::cout << "无环" << std::endl;
+    }
+
+    void test3() {
+        bool hasCycle = LeetCode::LinkedList::HasCycleLinkedList::two(initCycleLinkedList({3, 2, 0, -4}, 1));
+        if (hasCycle)
+            std::cout << "有环" << std::endl;
+        else
+            std::cout << "无环" << std::endl;
+    }
+
+    void test4() {
+        bool hasCycle = LeetCode::LinkedList::HasCycleLinkedList::two(initCycleLinkedList({3, 2, 0, -4}, -1));
+        if (hasCycle)
+            std::cout << "有环" << std::endl;
+        else
+            std::cout << "无环" << std::endl;
+    }
+}
+
 int main() {
     //Example01::test1();
 
@@ -91,8 +170,13 @@ int main() {
     //ExampleInterview24::test2);
     //ExampleInterview24::test3();
 
-    Example24::test1();
-    Example24::test2();
+    //Example24::test1();
+    //Example24::test2();
+
+    Example141::test1();
+    Example141::test2();
+    Example141::test3();
+    Example141::test4();
 
     return 0;
 }

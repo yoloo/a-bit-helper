@@ -51,6 +51,15 @@ namespace LeetCode
             // b.双指针迭代(重构next)
             ListNode* two(ListNode* head);
         }
+
+        //141. 判断链表是否有环
+        namespace HasCycleLinkedList {
+            // a.地址是否出现过
+            bool one(ListNode* head);
+
+            // b.快慢指针
+            bool two(ListNode* head);
+        }
     }
 };
 

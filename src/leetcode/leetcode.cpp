@@ -4,6 +4,7 @@
 
 #include "leetcode.h"
 
+#include <set>
 #include <unordered_map>
 
 namespace LeetCode {
@@ -117,6 +118,44 @@ namespace LeetCode {
                 next->next = head;
 
                 return next;
+            }
+        }
+
+        namespace HasCycleLinkedList {
+            bool one(ListNode* head) {
+                if (nullptr == head || nullptr == head->next)
+                    return false;
+
+                std::set<ListNode*> addrs;
+                auto cur = head;
+                while (cur != nullptr) {
+                    if (addrs.count(cur))
+                        return true;
+
+                    addrs.insert(cur);
+
+                    cur = cur->next;
+                }
+
+                return false;
+            }
+
+            bool two(ListNode* head) {
+                if (nullptr == head || nullptr == head->next)
+                    return false;
+
+                auto slow = head;
+                auto fast = slow;
+                while (slow != nullptr && fast != nullptr) {
+
+                    slow = slow->next;
+                    fast = fast->next ? fast->next->next : nullptr;
+
+                    if (slow == fast)
+                        return true;
+                }
+
+                return false;
             }
         }
     }
