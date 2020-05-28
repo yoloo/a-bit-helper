@@ -5,30 +5,31 @@
 #include "benchmark/benchmark.h"
 
 #include <algorithm>
-#include <ostream>
 
-uint64_t finonacci(uint64_t limit)
+size_t fibonacci(size_t n)
 {
-    if (0 == limit)
+    if (!n)
         return 0;
 
-    if (1 == limit)
-        return 1;
+    size_t a = 1;
+    size_t b = 1;
+    for (int i = 0; i < n; ++i) {
+        std::swap(a, b);
 
-    return finonacci(limit - 1) + finonacci(limit - 2);
-}
-
-static void BM_Finonacci_2(benchmark::State& state)
-{
-    uint64_t ret = 0;
-    while (state.KeepRunning())
-    {
-        benchmark::DoNotOptimize(ret = finonacci(state.range(0)));
+        b += a;
     }
 
-    std::ostream cnull(nullptr);
-    cnull << ret;
+    return b;
 }
-BENCHMARK(BM_Finonacci_2)->RangeMultiplier(2)->Range(1, 1 << 5);
+
+static void BM_Fibonacci(benchmark::State& state)
+{
+    size_t ret = 0;
+    while (state.KeepRunning())
+    {
+        ret |= fibonacci(state.range_x());
+    }
+}
+BENCHMARK(BM_Fibonacci)->Arg(5)->Arg(42)->Arg(87)->Unit(benchmark::kMicrosecond);
 
 BENCHMARK_MAIN();

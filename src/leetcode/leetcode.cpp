@@ -146,10 +146,9 @@ namespace LeetCode {
 
                 auto slow = head;
                 auto fast = slow;
-                while (slow != nullptr && fast != nullptr) {
-
+                while (fast != nullptr && fast->next != nullptr) {
                     slow = slow->next;
-                    fast = fast->next ? fast->next->next : nullptr;
+                    fast = fast->next;
 
                     if (slow == fast)
                         return true;
