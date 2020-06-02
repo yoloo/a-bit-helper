@@ -60,6 +60,12 @@ namespace LeetCode
             // b.快慢指针
             bool two(ListNode* head);
         }
+
+        //142. 返回链表入环节点
+        namespace DetectCycleLinkedList {
+            // a.哈希表
+            ListNode* one(ListNode* head);
+        }
     }
 };
 
