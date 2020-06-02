@@ -163,6 +163,17 @@ namespace Example141 {
     }
 }
 
+// 142
+namespace Example142 {
+    void test1() {
+        auto head = initCycleLinkedList({3, 2, 0, -4}, 1);
+        auto cycle = LeetCode::LinkedList::DetectCycleLinkedList::one(head);
+
+        if (cycle != nullptr)
+            std::cout << "cycle node val: " << cycle->val << std::endl;
+    }
+}
+
 int main() {
     //Example01::test1();
 
@@ -173,10 +184,12 @@ int main() {
     //Example24::test1();
     //Example24::test2();
 
-    Example141::test1();
-    Example141::test2();
-    Example141::test3();
-    Example141::test4();
+    //Example141::test1();
+    //Example141::test2();
+    //Example141::test3();
+    //Example141::test4();
+
+    Example142::test1();
 
     return 0;
 }

@@ -157,6 +157,27 @@ namespace LeetCode {
                 return false;
             }
         }
+
+        namespace DetectCycleLinkedList {
+            ListNode* one(ListNode* head) {
+                if (nullptr == head || nullptr == head->next)
+                    return nullptr;
+
+                std::set<ListNode*> lefts;
+
+                auto cur = head;
+                while (cur != nullptr) {
+                    if (lefts.count(cur))
+                        return cur;
+
+                    lefts.insert(cur);
+
+                    cur = cur->next;
+                }
+
+                return nullptr;
+            }
+        }
     }
 
 }

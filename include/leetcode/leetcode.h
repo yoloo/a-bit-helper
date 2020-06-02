@@ -54,11 +54,17 @@ namespace LeetCode
 
         //141. 判断链表是否有环
         namespace HasCycleLinkedList {
-            // a.地址是否出现过
+            // a.哈希表
             bool one(ListNode* head);
 
             // b.快慢指针
             bool two(ListNode* head);
+        }
+
+        //142. 返回链表入环节点
+        namespace DetectCycleLinkedList {
+            // a.哈希表
+            ListNode* one(ListNode* head);
         }
     }
 };
