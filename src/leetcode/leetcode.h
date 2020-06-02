@@ -31,7 +31,7 @@ namespace LeetCode
             ListNode(int x) : val(x), next(nullptr) {}
         };
 
-        //面试题-24. 反转链表
+        //206. 反转链表
         namespace ReverseLinkedList {
             // a.双指针迭代
             ListNode* one(ListNode* head);

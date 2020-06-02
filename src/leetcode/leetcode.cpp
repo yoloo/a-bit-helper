@@ -39,23 +39,33 @@ namespace LeetCode {
 
     namespace LinkedList {
         namespace ReverseLinkedList {
+            //
+            // 1. 双指针迭代
+            //
             ListNode* one(ListNode* head) {
                 if (nullptr == head || nullptr == head->next)
                     return head;
 
                 ListNode* prev = nullptr;
-                ListNode* cur  = head;
+                auto cur       = head;
                 while (cur != nullptr) {
-                    auto next = cur->next;
+                    // 1. 当前节点的next节点为新的头节点
+                    head = cur->next;
+
+                    // 2. 当前节点与前置节点反转
                     cur->next = prev;
                     prev = cur;
 
-                    cur = next;
+                    // 3. 当前节点指向已保存新的头节点
+                    cur = head;
                 }
 
                 return prev;
             }
 
+            //
+            // 2. 递归调用
+            //
             ListNode* two(ListNode* head) {
                 if (nullptr == head || nullptr == head->next)
                     return head;
@@ -67,6 +77,9 @@ namespace LeetCode {
                 return cur;
             }
 
+            //
+            // 3. 交换数值
+            //
             ListNode* three(ListNode* head) {
                 if (nullptr == head || nullptr == head->next)
                     return head;
