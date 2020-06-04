@@ -9,7 +9,9 @@
 
 namespace LeetCode {
     namespace Array {
+        // 1. 两数之和
         namespace TwoSum {
+            // 1. 哈希映射
             std::vector<int> one(const std::vector<int> &nums, int target) {
                 std::unordered_map<int, int> lefts;
                 for (int i = 0; i < nums.size(); ++i) {
@@ -23,6 +25,7 @@ namespace LeetCode {
                 return {};
             }
 
+            // 2. 双层循环
             std::vector<int> two(const std::vector<int> &nums, int target) {
                 int len = nums.size();
                 for (int i = 0; i < len; ++i) {
@@ -38,6 +41,7 @@ namespace LeetCode {
     }
 
     namespace LinkedList {
+        // 206. 反转链表
         namespace ReverseLinkedList {
             //
             // 1. 双指针迭代
@@ -102,57 +106,57 @@ namespace LeetCode {
             }
         }
 
+        // 24. 交换链表相邻节点
         namespace SwapPairsLinkedList {
+            // 1. 两两交换值
             ListNode* one(ListNode* head) {
                 if (nullptr == head || nullptr == head->next)
                     return head;
 
                 auto cur  = head;
-                auto next = cur->next;
-                while (cur != nullptr && next != nullptr) {
-                    std::swap(cur->val, next->val);
+                while (cur != nullptr && cur->next != nullptr) {
+                    std::swap(cur->val, cur->next->val);
 
-                    cur  = next->next;
-                    if (cur != nullptr)
-                        next = cur->next;
+                    cur  = cur->next->next;
                 }
 
                 return head;
             }
 
+            // 2. 递归调整
             ListNode* two(ListNode* head) {
                 if (nullptr == head || nullptr == head->next)
                     return head;
 
                 auto next = head->next;
-                next->next = two(next->next);
-
-                head->next = next->next;
+                head->next = two(next->next);
                 next->next = head;
 
                 return next;
             }
         }
 
+        // 141. 判断链表是否有环
         namespace HasCycleLinkedList {
+            // 1. 哈希集合
             bool one(ListNode* head) {
                 if (nullptr == head || nullptr == head->next)
                     return false;
 
-                std::set<ListNode*> addrs;
-                auto cur = head;
-                while (cur != nullptr) {
-                    if (addrs.count(cur))
+                std::set<ListNode*> olds;
+                while (head != nullptr) {
+                    if (olds.count(head))
                         return true;
 
-                    addrs.insert(cur);
+                    olds.insert(head);
 
-                    cur = cur->next;
+                    head = head->next;
                 }
 
                 return false;
             }
 
+            // 2. 快慢指针
             bool two(ListNode* head) {
                 if (nullptr == head || nullptr == head->next)
                     return false;
@@ -171,21 +175,22 @@ namespace LeetCode {
             }
         }
 
+        // 142. 返回链表入环节点
         namespace DetectCycleLinkedList {
+            // 1. 哈希集合
             ListNode* one(ListNode* head) {
                 if (nullptr == head || nullptr == head->next)
                     return nullptr;
 
                 std::set<ListNode*> lefts;
 
-                auto cur = head;
-                while (cur != nullptr) {
-                    if (lefts.count(cur))
-                        return cur;
+                while (head != nullptr) {
+                    if (lefts.count(head))
+                        return head;
 
-                    lefts.insert(cur);
+                    lefts.insert(head);
 
-                    cur = cur->next;
+                    head = head->next;
                 }
 
                 return nullptr;
