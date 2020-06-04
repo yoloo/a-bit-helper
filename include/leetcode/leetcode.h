@@ -31,7 +31,7 @@ namespace LeetCode
             ListNode(int x) : val(x), next(nullptr) {}
         };
 
-        //206. 反转链表
+        //面试题-24. 反转链表
         namespace ReverseLinkedList {
             // a.双指针迭代
             ListNode* one(ListNode* head);
@@ -54,17 +54,11 @@ namespace LeetCode
 
         //141. 判断链表是否有环
         namespace HasCycleLinkedList {
-            // a.哈希表
+            // a.地址是否出现过
             bool one(ListNode* head);
 
             // b.快慢指针
             bool two(ListNode* head);
-        }
-
-        //142. 返回链表入环节点
-        namespace DetectCycleLinkedList {
-            // a.哈希表
-            ListNode* one(ListNode* head);
         }
     }
 };
