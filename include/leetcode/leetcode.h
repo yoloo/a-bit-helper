@@ -6,6 +6,7 @@
 #define A_BIT_HELPER_LEET_CODE_H
 
 #include <vector>
+#include <string>
 
 namespace LeetCode
 {
@@ -31,7 +32,7 @@ namespace LeetCode
             ListNode(int x) : val(x), next(nullptr) {}
         };
 
-        //面试题-24. 反转链表
+        //206. 反转链表
         namespace ReverseLinkedList {
             // a.双指针迭代
             ListNode* one(ListNode* head);
@@ -54,11 +55,73 @@ namespace LeetCode
 
         //141. 判断链表是否有环
         namespace HasCycleLinkedList {
-            // a.地址是否出现过
+            // a.哈希表
             bool one(ListNode* head);
 
             // b.快慢指针
             bool two(ListNode* head);
+        }
+
+        //142. 返回链表入环节点
+        namespace DetectCycleLinkedList {
+            // a.哈希表
+            ListNode* one(ListNode* head);
+        }
+    }
+
+    // 堆栈
+    namespace Stack {
+        struct StackVector {
+        public:
+            bool empty() { return !idx_; }
+
+            size_t size() const { return idx_; }
+
+            char at(size_t i) const {
+                if (i > idx_)
+                    return '\0';
+
+                return inner_[i];
+            }
+
+            bool equal(const StackVector& s) {
+                if (size() != s.size())
+                    return false;
+
+                for (int i = 0; i <= idx_; ++i) {
+                    if (at(i) != s.at(i))
+                        return false;
+                }
+
+                return true;
+            }
+
+            void push(char c) {
+                ++idx_;
+                if (idx_ <= inner_.size())
+                    inner_.push_back('\0');
+
+                inner_[idx_] = c;
+            }
+
+            char pop() {
+                if (idx_)
+                {
+                    --idx_;
+                    return inner_.at(idx_ + 1);
+                }
+
+                return '\0';
+            }
+
+        private:
+            size_t idx_ = 0;
+            std::vector<char> inner_{'\0'};
+        };
+
+        //844. 比较包含退格符的字符串
+        namespace BackSpaceCompare {
+            bool one(std::string S, std::string T);
         }
     }
 };

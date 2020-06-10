@@ -198,4 +198,30 @@ namespace LeetCode {
         }
     }
 
+    namespace Stack {
+        //844. 比较包含退格符的字符串
+        namespace BackSpaceCompare {
+            auto init_stack = [](std::string& str, StackVector& sv) {
+                for (const auto& item : str) {
+                    if ('#' == item) {
+                        if (!sv.empty())
+                            sv.pop();
+                    } else {
+                        sv.push(item);
+                    }
+                }
+            };
+
+            bool one(std::string S, std::string T) {
+                StackVector ss;
+                init_stack(S, ss);
+
+                StackVector st;
+                init_stack(T, st);
+
+                return ss.equal(st);
+            }
+        }
+    }
+
 }

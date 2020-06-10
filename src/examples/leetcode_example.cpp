@@ -174,6 +174,39 @@ namespace Example142 {
     }
 }
 
+// 848
+namespace Example848 {
+    void test1() {
+        {
+            std::string S("ab#c");
+            std::string T("ad#c");
+
+            std::cout << S << "<=>" << T << " " << (LeetCode::Stack::BackSpaceCompare::one(S, T) ? "True" : "False") << std::endl;
+        }
+
+        {
+            std::string S("ab##");
+            std::string T("c#d#");
+
+            std::cout << S << "<=>" << T << " " << (LeetCode::Stack::BackSpaceCompare::one(S, T) ? "True" : "False") << std::endl;
+        }
+
+        {
+            std::string S("a##c");
+            std::string T("#a#c");
+
+            std::cout << S << "<=>" << T << " " << (LeetCode::Stack::BackSpaceCompare::one(S, T) ? "True" : "False") << std::endl;
+        }
+
+        {
+            std::string S("a#c");
+            std::string T("b");
+
+            std::cout << S << "<=>" << T << " " << (LeetCode::Stack::BackSpaceCompare::one(S, T) ? "True" : "False") << std::endl;
+        }
+    }
+}
+
 int main() {
     //Example01::test1();
 
@@ -189,7 +222,9 @@ int main() {
     //Example141::test3();
     //Example141::test4();
 
-    Example142::test1();
+    //Example142::test1();
+
+    Example848::test1();
 
     return 0;
 }
