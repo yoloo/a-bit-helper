@@ -4,12 +4,12 @@
 
 linux下编译生成的可执行文件遵循ELF格式，示意结构如下图：
 
-![elf](./pic/elf-01.png)
+![elf](../../pic/elf-01.png)
 
 运行时，可执行程序被加载到内存，对应的虚拟内存结构如下图：
-![elf](./pic/elf-02.png)
+![elf](../../pic/elf-02.png)
 
 函数栈帧大致结构示意图：
-![elf](./pic/elf-03.png)
+![elf](../../pic/elf-03.png)
 
 函数调用过程原理分析, http://rangechow.com/2016/09/01/函数调用原理.html
