@@ -5,6 +5,7 @@
 #include "leetcode.h"
 
 #include <set>
+#include <map>
 #include <unordered_map>
 
 namespace LeetCode {
@@ -220,6 +221,43 @@ namespace LeetCode {
                 init_stack(T, st);
 
                 return ss.equal(st);
+            }
+        }
+
+        //20. 判断字符串是否合法(限定'(', ')', '[', ']', '{', '}')
+        namespace IsValidString {
+            bool one(std::string s) {
+                StackVector st;
+
+                std::map<char, char> tb{
+                    {')', '('},
+                    {']', '['},
+                    {'}', '{'}
+                };
+
+                for (const auto& ch : s) {
+                    switch (ch) {
+                        case '(':
+                        case '[':
+                        case '{':
+                            {
+                                st.push(ch);
+                            }
+                            break;
+                        case ')':
+                        case ']':
+                        case '}':
+                            {
+                                if (st.pop() != tb[ch])
+                                    return false;
+                            }
+                            break;
+                        default:
+                            return false;
+                    }
+                }
+
+                return st.empty();
             }
         }
     }

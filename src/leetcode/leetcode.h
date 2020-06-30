@@ -123,6 +123,11 @@ namespace LeetCode
         namespace BackSpaceCompare {
             bool one(std::string S, std::string T);
         }
+
+        //20. 判断字符串是否合法('(', ')', '[', ']', '{', '}')
+        namespace IsValidString {
+            bool one(std::string s);
+        }
     }
 };
 
