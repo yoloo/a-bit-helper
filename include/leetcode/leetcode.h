@@ -10,12 +10,143 @@
 
 namespace LeetCode
 {
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    // 单链表节点
+    //
     struct ListNode {
         int val;
         ListNode* next;
 
         ListNode(int x) : val(x), next(nullptr) {}
     };
+
+    //
+    // 字符栈
+    //
+    struct MyStackVectorChar {
+    public:
+        bool empty() { return !idx_; }
+
+        size_t size() const { return idx_; }
+
+        char at(size_t i) const {
+            if (i > idx_)
+                return '\0';
+
+            return inner_[i];
+        }
+
+        bool equal(const MyStackVectorChar& s) {
+            if (size() != s.size())
+                return false;
+
+            for (int i = 0; i <= idx_; ++i) {
+                if (at(i) != s.at(i))
+                    return false;
+            }
+
+            return true;
+        }
+
+        void push(char c) {
+            ++idx_;
+            if (idx_ <= inner_.size())
+                inner_.push_back('\0');
+
+            inner_[idx_] = c;
+        }
+
+        char pop() {
+            if (idx_)
+            {
+                --idx_;
+                return inner_.at(idx_ + 1);
+            }
+
+            return '\0';
+        }
+
+        char peek() {
+            if (idx_) {
+                return inner_.at(idx_);
+            }
+
+            return '\0';
+        }
+
+    private:
+        size_t idx_ = 0;
+        std::vector<char> inner_{'\0'};
+    };
+
+    //
+    // 模板栈
+    //
+    template <typename T>
+    class MyStackVectorT {
+    public:
+        MyStackVectorT() {
+            idx_++;
+            inner_.push_back(T{});
+        }
+
+    public:
+        size_t size() const {
+            return idx_ - 1;
+        }
+
+        bool empty() {
+            return !size();
+        }
+
+        void push(T t) {
+            if (idx_ >= inner_.size())
+                inner_.push_back(T{});
+
+            inner_[idx_++] = t;
+        }
+
+        T pop() {
+            if (idx_ <= 1)
+                return T{};
+
+            return inner_[--idx_];
+        }
+
+        T peek() {
+            if (idx_ <= 1)
+                return T{};
+
+            return inner_[idx_ - 1];
+        }
+
+    public:
+        T at(size_t i) const {
+            if (i <= 0 || i >= idx_)
+                return T{};
+
+            inner_[i];
+        }
+
+        bool equal(const MyStackVectorT<T>& s) {
+            if (size() != s.size())
+                return false;
+
+            for (int i = 1; i < idx_; ++i) {
+                if (at(i) != s.at(i))
+                    return false;
+            }
+
+            return true;
+        }
+
+    private:
+        size_t idx_ = 0;
+        std::vector<T> inner_;
+    };
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // 数组
     namespace Array
@@ -72,130 +203,6 @@ namespace LeetCode
 
     // 堆栈
     namespace Stack {
-        //
-        // 字符栈
-        //
-        struct MyStackVectorChar {
-        public:
-            bool empty() { return !idx_; }
-
-            size_t size() const { return idx_; }
-
-            char at(size_t i) const {
-                if (i > idx_)
-                    return '\0';
-
-                return inner_[i];
-            }
-
-            bool equal(const MyStackVectorChar& s) {
-                if (size() != s.size())
-                    return false;
-
-                for (int i = 0; i <= idx_; ++i) {
-                    if (at(i) != s.at(i))
-                        return false;
-                }
-
-                return true;
-            }
-
-            void push(char c) {
-                ++idx_;
-                if (idx_ <= inner_.size())
-                    inner_.push_back('\0');
-
-                inner_[idx_] = c;
-            }
-
-            char pop() {
-                if (idx_)
-                {
-                    --idx_;
-                    return inner_.at(idx_ + 1);
-                }
-
-                return '\0';
-            }
-
-            char peek() {
-                if (idx_) {
-                    return inner_.at(idx_);
-                }
-
-                return '\0';
-            }
-
-        private:
-            size_t idx_ = 0;
-            std::vector<char> inner_{'\0'};
-        };
-
-        //
-        // 模板栈
-        //
-        template <typename T>
-        class MyStackVectorT {
-        public:
-            MyStackVectorT() {
-                idx_++;
-                inner_.push_back(T{});
-            }
-
-        public:
-            size_t size() const {
-                return idx_ - 1;
-            }
-
-            bool empty() {
-                return !size();
-            }
-
-            void push(T t) {
-                if (idx_ >= inner_.size())
-                    inner_.push_back(T{});
-
-                inner_[idx_++] = t;
-            }
-
-            T pop() {
-                if (idx_ <= 1)
-                    return T{};
-
-                return inner_[--idx_];
-            }
-
-            T peek() {
-                if (idx_ <= 1)
-                    return T{};
-
-                return inner_[idx_ - 1];
-            }
-
-        public:
-            T at(size_t i) const {
-                if (i <= 0 || i >= idx_)
-                    return T{};
-
-                inner_[i];
-            }
-
-            bool equal(const MyStackVectorT<T>& s) {
-               if (size() != s.size())
-                   return false;
-
-                for (int i = 1; i < idx_; ++i) {
-                    if (at(i) != s.at(i))
-                        return false;
-                }
-
-                return true;
-            }
-
-        private:
-            size_t idx_ = 0;
-            std::vector<T> inner_;
-        };
 
         //844. 比较包含退格符的字符串
         namespace BackSpaceCompare {

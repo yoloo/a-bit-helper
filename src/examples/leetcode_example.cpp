@@ -210,7 +210,7 @@ namespace Example848 {
 // 232
 namespace Example232 {
     void test1() {
-        LeetCode::Stack::MyStackVectorT<char> st1;
+        LeetCode::MyStackVectorT<char> st1;
 
         st1.push('a');
         st1.push('b');
