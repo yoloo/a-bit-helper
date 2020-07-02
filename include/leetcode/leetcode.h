@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <string>
+#include <memory>
 
 namespace LeetCode
 {
@@ -19,7 +20,18 @@ namespace LeetCode
         int val;
         ListNode* next;
 
-        ListNode(int x) : val(x), next(nullptr) {}
+        explicit ListNode(int x) : val(x), next(nullptr) {}
+    };
+
+    //
+    // 单链表节点模板
+    //
+    template <typename T>
+    struct ListNodeT {
+        T val;
+        std::shared_ptr<ListNodeT> next;
+
+        explicit ListNodeT(T t) : val(t), next(nullptr) {}
     };
 
     //
@@ -150,6 +162,60 @@ namespace LeetCode
         std::vector<T> inner_;
     };
 
+    //
+    // 模板队列
+    //
+    template <typename T>
+    class MyQueueListT {
+    public:
+        void push(T t) {
+            auto node = std::make_shared<ListNodeT<T>>(t);
+            if (nullptr == node)
+                return;
+
+            if (tail_ != nullptr) {
+                tail_->next = node;
+            } else {
+                head_ = node;
+            }
+
+            tail_ = node;
+            ++len_;
+        }
+
+        T pop() {
+            if (nullptr == head_)
+                return T{};
+
+            auto cur = head_;
+            if (nullptr == cur->next) {
+                tail_ = nullptr;
+            }
+
+            head_ = cur->next;
+            --len_;
+
+            return cur->val;
+        }
+
+        T peek() {
+            if (nullptr == head_)
+                return T{};
+
+            return head_->val;
+        }
+
+    public:
+        size_t size() const { return len_; }
+
+        bool empty() const { return !size(); }
+
+    private:
+        size_t len_ = 0;
+        std::shared_ptr<ListNodeT<T>> head_ = nullptr;
+        std::shared_ptr<ListNodeT<T>> tail_ = nullptr;
+    };
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // 数组
@@ -218,6 +284,58 @@ namespace LeetCode
             bool one(std::string s);
         }
 
+        //225. 用队列实现栈
+        namespace Queue2Stack {
+            class MyStack {
+            public:
+                /** Initialize your data structure here. */
+                MyStack() {
+
+                }
+
+                /** Push element x onto stack. */
+                void push(int x) {
+                    rears_.push(x);
+                }
+
+                /** Removes the element on top of the stack and returns that element. */
+                int pop() {
+                    while (rears_.size() > 1) {
+                        fonts_.push(rears_.pop());
+                    }
+
+                    auto ret = rears_.pop();
+
+                    while (!fonts_.empty()) {
+                        rears_.push(fonts_.pop());
+                    }
+
+                    return ret;
+                }
+
+                /** Get the top element. */
+                int top() {
+                    while (rears_.size() > 1) {
+                        fonts_.push(rears_.pop());
+                    }
+
+                    return rears_.peek();
+                }
+
+                /** Returns whether the stack is empty. */
+                bool empty() {
+                    return rears_.empty() && fonts_.empty();
+                }
+
+            private:
+                MyQueueListT<int> rears_;
+                MyQueueListT<int> fonts_;
+            };
+        }
+    }
+
+    // 队列
+    namespace Queue {
         //232. 用栈实现队列
         namespace Stack2Queue {
 

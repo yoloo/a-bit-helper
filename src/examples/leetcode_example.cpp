@@ -238,12 +238,62 @@ namespace Example232 {
     }
 
     void test2() {
-        LeetCode::Stack::Stack2Queue::MyQueue myqueue;
+        LeetCode::Queue::Stack2Queue::MyQueue myqueue;
         myqueue.push(1);
         myqueue.push(2);
         std::cout << myqueue.peek() << std::endl;
         std::cout << myqueue.pop() << std::endl;
         std::cout << myqueue.empty() << std::endl;
+    }
+}
+
+// 225
+namespace Example225 {
+    void test1() {
+        LeetCode::MyQueueListT<int> q;
+
+        std::cout << (q.empty() ? "empty" : "no empty") << std::endl;
+        std::cout << "size=" << q.size() << std::endl;
+
+        q.push(1);
+        q.push(2);
+        q.push(3);
+
+        std::cout << (q.empty() ? "empty" : "no empty") << std::endl;
+        std::cout << "size=" << q.size() << std::endl;
+
+
+        std::cout << q.peek() << std::endl;
+        std::cout << q.peek() << std::endl;
+        std::cout << q.pop() << std::endl;
+        std::cout << (q.empty() ? "empty" : "no empty") << std::endl;
+        std::cout << "size=" << q.size() << std::endl;
+
+        std::cout << q.pop() << std::endl;
+        std::cout << q.pop() << std::endl;
+
+        q.push(5);
+        q.push(6);
+
+        std::cout << (q.empty() ? "empty" : "no empty") << std::endl;
+        std::cout << "size=" << q.size() << std::endl;
+
+        std::cout << q.pop() << std::endl;
+        std::cout << q.pop() << std::endl;
+        std::cout << q.pop() << std::endl;
+
+        std::cout << (q.empty() ? "empty" : "no empty") << std::endl;
+        std::cout << "size=" << q.size() << std::endl;
+    }
+
+    void test2() {
+        LeetCode::Stack::Queue2Stack::MyStack mystack;
+        mystack.push(1);
+        mystack.push(2);
+
+        std::cout << mystack.top() << std::endl;
+        std::cout << mystack.pop() << std::endl;
+        std::cout << (mystack.empty() ? "empty" : "no empty") << std::endl;
     }
 }
 
@@ -267,7 +317,10 @@ int main() {
     //Example848::test1();
 
     //Example232::test1();
-    Example232::test2();
+    //Example232::test2();
+
+    //Example225::test1();
+    Example225::test2();
 
     return 0;
 }
