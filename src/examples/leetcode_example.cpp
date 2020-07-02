@@ -207,6 +207,46 @@ namespace Example848 {
     }
 }
 
+// 232
+namespace Example232 {
+    void test1() {
+        LeetCode::Stack::MyStackVectorT<char> st1;
+
+        st1.push('a');
+        st1.push('b');
+
+        std::cout << "peek=" << st1.peek() << std::endl;
+        std::cout << "pop=" << st1.pop() << std::endl;
+        std::cout << "pop=" << st1.pop() << std::endl;
+
+        std::cout << "stack-size:" << st1.size() << std::endl;
+        std::cout << "stack-empty:" << st1.empty() << std::endl;
+
+        std::cout << "pop=" << st1.pop() << std::endl;
+        std::cout << "peek=" << st1.peek() << std::endl;
+
+        st1.push('c');
+        st1.push('d');
+        st1.push('e');
+        std::cout << "stack-size:" << st1.size() << std::endl;
+        std::cout << "stack-empty:" << st1.empty() << std::endl;
+        std::cout << "peek=" << st1.peek() << std::endl;
+        std::cout << "pop=" << st1.pop() << std::endl;
+        std::cout << "pop=" << st1.pop() << std::endl;
+        std::cout << "stack-size:" << st1.size() << std::endl;
+        std::cout << "stack-empty:" << st1.empty() << std::endl;
+    }
+
+    void test2() {
+        LeetCode::Stack::Stack2Queue::MyQueue myqueue;
+        myqueue.push(1);
+        myqueue.push(2);
+        std::cout << myqueue.peek() << std::endl;
+        std::cout << myqueue.pop() << std::endl;
+        std::cout << myqueue.empty() << std::endl;
+    }
+}
+
 int main() {
     //Example01::test1();
 
@@ -224,7 +264,10 @@ int main() {
 
     //Example142::test1();
 
-    Example848::test1();
+    //Example848::test1();
+
+    //Example232::test1();
+    Example232::test2();
 
     return 0;
 }

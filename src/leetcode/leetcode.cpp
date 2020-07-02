@@ -8,6 +8,8 @@
 #include <map>
 #include <unordered_map>
 
+#include <iostream>
+
 namespace LeetCode {
     namespace Array {
         // 1. 两数之和
@@ -202,7 +204,7 @@ namespace LeetCode {
     namespace Stack {
         //844. 比较包含退格符的字符串
         namespace BackSpaceCompare {
-            auto init_stack = [](std::string& str, StackVector& sv) {
+            auto init_stack = [](std::string& str, MyStackVectorChar& sv) {
                 for (const auto& item : str) {
                     if ('#' == item) {
                         if (!sv.empty())
@@ -214,10 +216,10 @@ namespace LeetCode {
             };
 
             bool one(std::string S, std::string T) {
-                StackVector ss;
+                MyStackVectorChar ss;
                 init_stack(S, ss);
 
-                StackVector st;
+                MyStackVectorChar st;
                 init_stack(T, st);
 
                 return ss.equal(st);
@@ -227,7 +229,7 @@ namespace LeetCode {
         //20. 判断字符串是否合法(限定'(', ')', '[', ']', '{', '}')
         namespace IsValidString {
             bool one(std::string s) {
-                StackVector st;
+                MyStackVectorChar st;
 
                 std::map<char, char> tb{
                     {')', '('},
