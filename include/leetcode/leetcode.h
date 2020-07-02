@@ -11,6 +11,7 @@
 namespace LeetCode
 {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     //
     // 单链表节点
     //
@@ -92,17 +93,16 @@ namespace LeetCode
         }
 
     public:
-        size_t size() const {
-            return idx_ - 1;
-        }
-
         bool empty() {
             return !size();
         }
 
         void push(T t) {
-            if (idx_ >= inner_.size())
-                inner_.push_back(T{});
+            if (idx_ >= inner_.size()) {
+                idx_++;
+                inner_.push_back(t);
+                return;
+            }
 
             inner_[idx_++] = t;
         }
@@ -127,6 +127,10 @@ namespace LeetCode
                 return T{};
 
             inner_[i];
+        }
+
+        size_t size() const {
+            return idx_ - 1;
         }
 
         bool equal(const MyStackVectorT<T>& s) {
@@ -216,6 +220,7 @@ namespace LeetCode
 
         //232. 用栈实现队列
         namespace Stack2Queue {
+
             class MyQueue {
             public:
                 /** Initialize your data structure here. */
