@@ -1,0 +1,78 @@
+@startuml
+
+title 角色登录时序图
+
+Client --> FLServer : stUserRequestLoginCmd
+
+FLServer -> SuperServer : 1.Cmd::FL:t_NewSession_Session
+
+SuperServer -> BillServer : 2.Cmd::Super::t_NewSession_Bill
+
+BillServer --> BillServer : ZEBRA_NEW BillUser
+activate BillServer #FFBBBB
+    BillServer -> GatewayServer : 3.Cmd::Bill::t_NewSession_Gateway
+deactivate
+
+GatewayServer --> GatewayServer : LoginSessionManager::put
+activate GatewayServer #FFBBBB
+    GatewayServer -> SuperServer : 4.Cmd::Super::t_NewSession_Gateway
+deactivate
+
+SuperServer --> FLServer : Cmd::FL::t_NewSession_Session
+
+FLServer --> Client : Cmd::stServerReturnLoginSuccessCmd
+
+
+Client --> GatewayServer : \t\t\t\t\t\t\t\t\t\t游戏客户端通过平台返回的网关地址，向指定网关发起tcp连接
+
+GatewayServer --> GatewayServer : ZEBRA_NEW GatewayTask
+activate GatewayServer #FFBBBB
+deactivate
+
+GatewayServer -> GatewayServer : 5.GatewayTask::verifyConn
+activate GatewayServer #FFBBBB
+    Client --> GatewayServer : Cmd::stUserVerifyVerCmd
+    GatewayServer --> GatewayServer : GatewayTask::verifyVersion
+    activate GatewayServer #DarkKhaki
+    deactivate
+
+    Client --> GatewayServer : Cmd::stPasswdLogonUserCmd
+    GatewayServer --> GatewayServer : GatewayTask::verifyACCID
+    activate GatewayServer #DarkKhaki
+    deactivate
+deactivate
+
+GatewayServer -> GatewayServer : 6.GatewayTask::waitSync
+activate GatewayServer #FFBBBB
+        GatewayServer -> BillServer : 7.Cmd::Bill::t_LoginVerify_Gateway
+deactivate
+
+BillServer -> GatewayServer : 8.Cmd::Bill::t_LoginVerify_Gateway_Return
+
+GatewayServer -> GatewayServer : 9.GatewayTask::addToContainer
+activate GatewayServer #FFBBBB
+    GatewayServer --> GatewayServer : ZEBRA_NEW GateUser
+    activate GatewayServer #DarkKhaki
+    deactivate
+
+    GatewayServer --> Client : Cmd::stGameTimeTimeUserCmd
+    GatewayServer --> Client : Cmd::stCountryInfoUserCmd
+
+    GatewayServer --> GatewayServer : GateUser::beginSelect
+    activate GatewayServer #DarkKhaki
+        GatewayServer -> RecordServer : 10.Cmd::Record::t_Get_SelectInfo_GateRecord
+    deactivate
+
+    GatewayServer --> SuperServer : Cmd::Super::t_GYList_GatewayTask
+
+    SuperServer --> FLServer : Cmd::FL::t_GYList_FL
+deactivate
+
+RecordServer -> GatewayServer : 11.Cmd::Record::t_Ret_SelectInfo_GateRecord
+activate GatewayServer #FFBBBB
+    GatewayServer --> GatewayServer : GateUser::refreshCharInfo
+
+    GatewayServer --> Client : Cmd::stUserInfoUserCmd
+deactivate
+
+@enduml
