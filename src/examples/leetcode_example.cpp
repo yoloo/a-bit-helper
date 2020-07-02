@@ -14,24 +14,24 @@ namespace Example01 {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-auto initLinkedList = [](int len) -> LeetCode::LinkedList::ListNode* {
+auto initLinkedList = [](int len) -> LeetCode::ListNode* {
     if (!len)
         return nullptr;
 
     int i = 1;
-    auto head = new LeetCode::LinkedList::ListNode(i);
+    auto head = new LeetCode::ListNode(i);
 
     auto cur = head;
     while (i < len)
     {
-        cur->next = new LeetCode::LinkedList::ListNode(++i);
+        cur->next = new LeetCode::ListNode(++i);
         cur       = cur->next;
     }
 
     return head;
 };
 
-auto dumpLinkedList = [](const LeetCode::LinkedList::ListNode* head) {
+auto dumpLinkedList = [](const LeetCode::ListNode* head) {
     if (nullptr == head || nullptr == head->next)
         return;
 
@@ -90,19 +90,19 @@ namespace Example24 {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-auto initCycleLinkedList = [](const std::initializer_list<int>& vals, int pos) -> LeetCode::LinkedList::ListNode* {
+auto initCycleLinkedList = [](const std::initializer_list<int>& vals, int pos) -> LeetCode::ListNode* {
     if (!vals.size())
         return nullptr;
 
-    LeetCode::LinkedList::ListNode* head  = nullptr;
-    LeetCode::LinkedList::ListNode* next  = nullptr;
+    LeetCode::ListNode* head  = nullptr;
+    LeetCode::ListNode* next  = nullptr;
 
-    LeetCode::LinkedList::ListNode* cycle = nullptr;
+    LeetCode::ListNode* cycle = nullptr;
 
     int idx = 0;
-    LeetCode::LinkedList::ListNode* cur = head;
+    LeetCode::ListNode* cur = head;
     for (const auto& item : vals) {
-        next = new LeetCode::LinkedList::ListNode(item);
+        next = new LeetCode::ListNode(item);
 
         if (pos == idx) {
             cycle = next;

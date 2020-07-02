@@ -27,7 +27,7 @@ static void BM_Fibonacci(benchmark::State& state)
     size_t ret = 0;
     while (state.KeepRunning())
     {
-        ret |= fibonacci(state.range_x());
+        ret |= fibonacci(state.range(0));
     }
 }
 BENCHMARK(BM_Fibonacci)->Arg(5)->Arg(42)->Arg(87)->Unit(benchmark::kMicrosecond);

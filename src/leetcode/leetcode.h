@@ -10,6 +10,13 @@
 
 namespace LeetCode
 {
+    struct ListNode {
+        int val;
+        ListNode* next;
+
+        ListNode(int x) : val(x), next(nullptr) {}
+    };
+
     // 数组
     namespace Array
     {
@@ -25,12 +32,6 @@ namespace LeetCode
 
     // 链表
     namespace LinkedList {
-        struct ListNode {
-            int val;
-            ListNode* next;
-
-            ListNode(int x) : val(x), next(nullptr) {}
-        };
 
         //206. 反转链表
         namespace ReverseLinkedList {
