@@ -1,4 +1,4 @@
-add_executable(assembly_study assembly_study.cpp)
+add_executable(as_study as_study.cpp)
 
 #include_directories(/usr/local/boost/include)
 #link_directories(/usr/local/boost/lib)

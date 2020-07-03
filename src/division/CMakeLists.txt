@@ -2,7 +2,7 @@ file(GLOB_RECURSE SOURCE_FILES *.cpp)
 
 #set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
-add_library(division STATIC ${SOURCE_FILES} ../study/assembly_study.cpp)
+add_library(division STATIC ${SOURCE_FILES})
 
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         DESTINATION ${INSTALL_INCLUDE_DIR}
