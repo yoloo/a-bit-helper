@@ -1,0 +1,380 @@
+@startuml
+
+title Scene网络层类图
+
+'继承 Extension <|--  继承关系
+'组合 Composition *--> 整体由部分构成，整体没有了，部分不存在
+'聚合 Aggregation o--> 整体由部分构成，整体没有了，部分还存在
+
+'0.#Moccasin
+'1.#LightSeaGreen
+'2.#DarkSalmon
+'3.#BBBBFF
+'4.#SkyBlue
+'5.#LightPink
+'6.#CadetBlue
+'7.#Violet
+
+abstract class zProcessor {
+    {method} virtual bool msgParse(const Cmd::t_NullCmd*, const unsigned int) = 0;
+}
+
+class zNoncopyable {
+
+}
+
+class zThread {
+    {method} virtual void run() = 0;
+}
+
+class zEntryC {
+
+}
+
+class zEntry {
+
+}
+
+'0.服务器类
+class zService #Moccasin {
+    {method} virtual bool init();
+    {method} virtual bool validate();
+    {method} virtual void resetLogger();
+    {method} virtual void reloadConfig();
+    {method} virtual void processException();
+    {method} virtual bool final() = 0;
+    {method} virtual bool serviceCallback() = 0;
+
+    void main();
+}
+
+class zNetService #Moccasin {
+    {method} virtual bool init();
+    {method} virtual bool final();
+    {method] virtual bool validate();
+    {method} virtual void newTCPTask(const int, const struct sockaddr_in*);
+}
+
+class zSubNetService #Moccasin {
+    {method} virtual bool init();
+    {method} virtual bool final();
+    {method] virtual bool validate();
+    {method} virtual bool msgParse_SuperService(const Cmd::t_NullCmd*, const unsigned int) = 0;
+}
+
+class ScenesService #Moccasin {
+    SuperCmdQueue superCmd;
+
+    {method} virtual bool init();
+    {method} virtual bool final();
+    {method} virtual void reloadConfig();
+    {method} virtual void processException();
+    {method} virtual void newTCPTask(const int, const struct sockaddr_in*);
+    {method} virtual bool msgParse_SuperService(const Cmd::t_NullCmd*, const unsigned int) = 0;
+}
+
+'1.主动连接处理类1，自带线程，不能加入线程池
+class zTCPClient #LightSeaGreen {
+    {method} virtual void run();
+    {method} virtual void close();
+    {method} virtual void sendCmd(const void*, const int);
+
+    {method} bool connect(const char* ip, const unsigned short port);
+}
+
+class zTCPBufferClient #LightSeaGreen {
+    {method} virtual void run();
+    {method} virtual void close();
+    {method} virtual void sendCmd(const void*, const int);
+
+    {method} bool ListeningRecv();
+    {method} bool ListeningSend();
+}
+
+class SuperClient #LightSeaGreen {
+    {method} virtual void run();
+    {method} virtual bool msgParse(const Cmd::t_NullCmd*, const unsigned int);
+
+    {method} bool msgParse_Startup(const Cmd::t_NullCmd*, const unsigned int);
+}
+
+class SessionClient #LightSeaGreen {
+    {method} virtual void run();
+    {method} virtual bool msgParse(const Cmd::t_NullCmd*, const unsigned int);
+    {method} virtual bool cmdMsgParse(const Cmd::t_NullCmd*, const unsigned int);
+
+    {method} bool connectToSessionServer();
+}
+
+class RecordClient #LightSeaGreen {
+    {method} virtual void run();
+    {method} virtual bool msgParse(const Cmd::t_NullCmd*, const unsigned int);
+    {method} virtual bool cmdMsgParse(const Cmd::t_NullCmd*, const unsigned int);
+
+    {method} bool connectToRecordServer();
+}
+
+class NpcClient #LightSeaGreen {
+    {method} virtual void run();
+    {method} virtual bool msgParse(const Cmd::t_NullCmd*, const unsigned int);
+    {method} virtual bool cmdMsgParse(const Cmd::t_NullCmd*, const unsigned int);
+
+    {method} bool connectToNpcServer();
+}
+
+'2.主动连接处理类2，不带线程，需要加入线程池
+class zTCPClientTask #DarkSalmon {
+    {method} virtual bool connect();
+    {method} virtual bool reconnect();
+    {method} vritual void addToContainer();
+    {method} virtual void removeFromContainer();
+    {method} virtual ListeningRecv();
+    {method} virtual ListeningSend();
+    {method} vritual bool sendCmd(const void*, const int);
+}
+
+class FunctionServerClient #DarkSalmon {
+    {method} virtual bool connect();
+    {method} vritual void addToContainer();
+    {method} virtual void removeFromContainer();
+    {method} vritual bool sendCmd(const void*, const int);
+    {method} virtual bool msgParse(const Cmd::t_NullCmd*, const unsigned int);
+    {method} virtual bool cmdMsgParse(const Cmd::t_NullCmd*, const unsigned int);
+}
+
+class BlogServerClient #DarkSalmon {
+    {method} virtual bool connect();
+    {method} vritual void addToContainer();
+    {method} virtual void removeFromContainer();
+    {method} vritual bool sendCmd(const void*, const int);
+    {method} virtual bool msgParse(const Cmd::t_NullCmd*, const unsigned int);
+    {method} virtual bool cmdMsgParse(const Cmd::t_NullCmd*, const unsigned int);
+}
+
+'3.被动连接处理类，需要加入线程池
+class zTCPTask #BBBBFF {
+    SecondMsgQueue msgque2;
+
+    {method} virutal int verifyConn();
+    {method} virtual int waitSync();
+    {method} virtual int recycleConn();
+    {method} virtual void addToContainer();
+    {method} virtual void removeFromContainer();
+    {method} virtual void Terminate(const TerminateMethod method);
+    {method} virutal uniqueAdd();
+    {method} virtual uniqueRemove();
+    {method} virtual ListeningRecv();
+    {method} virtual ListeningSend();
+    {method} virtual sendCmd(const void* pstrCmd, int nCmdLen);
+    {method} virtual msgParse(const Cmd::t_NullCmd*, const unsigned int);
+
+    {method} virtual isSecondCmd(const Cmd::t_NullCmd*, const unsigned int);
+    {method} virtual doSecondCmd(const Cmd::t_NullCmd*, const unsigned int);
+}
+
+class SceneTask #BBBBFF {
+    {method} virutal int verifyConn();
+    {method} virtual int waitSync();
+    {method} virtual int recycleConn();
+    {method} virutal uniqueAdd();
+    {method} virtual uniqueRemove();
+    {method} vritual bool sendCmd(const void*, const int);
+    {method} virtual bool msgParse(const Cmd::t_NullCmd*, const unsigned int);
+    {method} virtual bool cmdMsgParse(const Cmd::t_NullCmd*, const unsigned int);
+
+    {method} virtual isSecondCmd(const Cmd::t_NullCmd*, const unsigned int); // 是否空闲处理
+    {method] virtual doSecondCmd(const Cmd::t_NullCmd*, const unsigned int); // 空闲时间处理
+}
+
+'4.主动连接线程池
+class zTCPClientTaskPool #SkyBlue {
+    zCheckconnectThread* checkconnectThread;
+    zCheckwaitThread* checkwaitThread;
+    zThreadGroup taskThreads;
+
+    {method} bool init();
+    {method} void addCheckwait(zTCPClientTask*);
+    {method} bool addMain(zTCPClientTask*);
+}
+
+class zTCPClientTaskQueue #SkyBlue {
+    {method} virtual void _add(zTCPClientTask*) = 0;
+
+    {method} void add(zTCPClientTask*);
+    {method} void check_queue();
+}
+
+class zCheckconnectThread #SkyBlue {
+    {method} virtual void run();
+}
+
+class zCheckwaitThread #SkyBlue {
+    {method} virtual void run();
+    {method} virtual void _add(zTCPClientTask*);
+}
+
+class zTCPClientTaskThread #SkyBlue {
+    {method} virtual void run();
+    {method} virtual void _add(zTCPClientTask*);
+}
+
+'5.被动连接线程池
+class zTCPTaskPool #LightPink {
+    zThreadGroup verifyThreads;
+    zSyncThread* syncThread;
+    zThreadGroup okayThreads;
+    zRecycleThread* recycleThread;
+
+    {method} bool init();
+    {method} void final();
+    {method} void addVerify(zTCPTask*);
+    {method} void addSync(zTCPTask*);
+    {method} void addOkay(zTCPTask*);
+    {method} void addRecycle(zTCPTask*);
+}
+
+class zTCPTaskQueue #LightPink {
+    {method} virtual void _add(zTCPTask*) = 0;
+
+    {method} void add(zTCPTask*);
+    {method} void check_queue();
+}
+
+class zVerifyThread #LightPink {
+    {method} virtual void run();
+    {method} virtual void _add(zTCPTask*);
+}
+
+class zSyncThread #LightPink {
+    {method} virtual void run();
+    {method} virtual void _add(zTCPTask*);
+}
+
+class zOkayThread #LightPink {
+    {method} virtual void run();
+    {method} virtual void _add(zTCPTask*);
+}
+
+class zRecycleThread #LightPink {
+    {method} virtual void run();
+    {method} virtual void _add(zTCPTask*);
+}
+
+'6.消息队列MessageBuffer
+class MessageBuffer #CadetBlue {
+    {method} virtual bool cmdMsgParse(const Cmd::t_NullCmd*, const unsigned int) = 0;
+
+    {method} bool doCmd();
+    {method} bool put(const Cmd::t_NullCmd*, const unsigned int);
+}
+
+class SuperCmdQueue #CadetBlue {
+    {method} virtual bool cmdMsgParse(const Cmd::t_NullCmd*, const unsigned int);
+}
+
+class SecondMsgQueue #CadetBlue {
+    {method} virtual bool cmdMsgParse(const Cmd::t_NullCmd*, const unsigned int);
+}
+
+'7.消息队列MessageQueue
+class MessageQueue #Violet {
+    {method} virtual bool cmdMsgParse(const Cmd::t_NullCmd*, const unsigned int) = 0;
+
+    {method} bool doCmd();
+    {method} bool put(const Cmd::t_NullCmd*, const unsigned int);
+}
+
+'-1.zEntry
+zNoncopyable <|-- zEntry
+zEntryC <|-- zEntry
+
+'0.zService
+zNoncopyable <|-- zService
+zService <|-- zNetService
+zNetService <|-- zSubNetService
+
+zSubNetService <|-- ScenesService
+ScenesService *--> SuperCmdQueue
+
+'1.zTCPClient
+zNoncopyable <|-- zThread
+zThread <|-- zTCPClient
+zProcessor <|-- zTCPClient
+
+zTCPClient <|-- zTCPBufferClient
+
+zTCPBufferClient <|-- SuperClient
+
+zTCPBufferClient <|-- SessionClient
+MessageQueue <|-- SessionClient
+
+zTCPBufferClient <|-- RecordClient
+MessageQueue <|-- RecordClient
+
+zTCPBufferClient <|-- NpcClient
+MessageQueue <|-- NpcClient
+zEntry <|-- NpcClient
+
+
+'2.zTCPClientTask
+zNoncopyable <|-- zTCPClientTask
+zProcessor <|-- zTCPClientTask
+
+zTCPClientTask <|-- FunctionServerClient
+MessageQueue <|-- FunctionServerClient
+
+zTCPClientTask <|-- BlogServerClient
+MessageQueue <|-- BlogServerClient
+
+'3.zTCPTask
+zNoncopyable <|-- zTCPTask
+zProcessor <|-- zTCPTask
+zTCPTask *--> SecondMsgQueue
+
+zTCPTask <|-- SceneTask
+MessageQueue <|-- SceneTask
+zEntry <|-- SceneTask
+
+'4.zTCPClientTaskPool
+zNoncopyable <|-- zTCPClientTaskPool
+
+zThread <|-- zCheckconnectThread
+
+zThread <|-- zCheckwaitThread
+zTCPClientTaskQueue <|-- zCheckwaitThread
+
+zThread <|-- zTCPClientTaskThread
+zTCPClientTaskQueue <|-- zTCPClientTaskThread
+
+zTCPClientTaskPool *--> zCheckconnectThread
+zTCPClientTaskPool *--> zCheckwaitThread
+zTCPClientTaskPool *--> zTCPClientTaskThread
+
+'5.zTCPTaskPool
+zNoncopyable <|-- zTCPTaskPool
+
+zThread <|-- zVerifyThread
+zTCPTaskQueue <|-- zVerifyThread
+
+zThread <|-- zSyncThread
+zTCPTaskQueue <|-- zSyncThread
+
+zThread <|-- zOkayThread
+zTCPTaskQueue <|-- zOkayThread
+
+zThread <|-- zRecycleThread
+zTCPTaskQueue <|-- zRecycleThread
+
+zTCPTaskPool *--> zVerifyThread
+zTCPTaskPool *--> zSyncThread
+zTCPTaskPool *--> zOkayThread
+zTCPTaskPool *--> zRecycleThread
+
+'6.MessageBuffer
+zNoncopyable <|-- MessageBuffer
+MessageBuffer <|-- SuperCmdQueue
+MessageBuffer <|-- SecondMsgQueue
+
+'7.MessageQueue
+
+@enduml

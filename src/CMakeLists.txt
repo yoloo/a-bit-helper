@@ -1,4 +1,3 @@
 add_subdirectory(division)
 add_subdirectory(leetcode)
-add_subdirectory(examples)
 add_subdirectory(study)
