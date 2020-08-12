@@ -280,6 +280,36 @@ namespace Test11 {
     }
 }
 
+namespace Test12 {
+    class X {
+    public:
+        //1. default
+        //virtual ~X() = default;
+
+        //2. empty
+        //virtual ~X() {
+        //}
+
+        // 1 and 2 is same, but it needs.
+    private:
+        int x;
+    };
+
+    class Y : public X {
+    public:
+        ~Y() {
+            std::cout << "destructor Y" << std::endl;
+        }
+    private:
+        int y;
+    };
+
+    void test() {
+        X* x = new Y;
+        delete x;
+    }
+}
+
 int main() {
     //Test1::test();
     //Test2::test();
@@ -289,7 +319,8 @@ int main() {
     //Test6::test();
     //Test8::test();
     //Test9::test();
-    Test11::test();
+    //Test11::test();
+    Test12::test();
 
     return 0;
 }
