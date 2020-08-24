@@ -10,3 +10,5 @@ add_executable(asio_study asio_study.cpp)
 add_executable(cpp11_study cpp11_study.cpp)
 
 add_executable(template_study template_study.cpp)
+
+add_executable(dispatch_handle_study dispatch_handle_study.cpp)
