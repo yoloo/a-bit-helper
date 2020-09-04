@@ -7,6 +7,7 @@
 #include <string>
 #include <iostream>
 #include <functional>
+#include <sstream>
 
 //auto -- deduction of a type from an initializer
 namespace Test1 {
@@ -309,6 +310,19 @@ namespace Test12 {
         delete x;
     }
 }
+namespace Test13 {
+    void run() {
+        enum class Type : uint32_t {
+            zero = 0,
+            one  = 1,
+        };
+
+        Type t = Type::one;
+
+        std::ostringstream oss;
+        oss << static_cast<uint32_t>(t);
+    }
+}
 
 int main() {
     //Test1::test();
@@ -320,7 +334,9 @@ int main() {
     //Test8::test();
     //Test9::test();
     //Test11::test();
-    Test12::test();
+    //Test12::test();
+
+    Test13::run();
 
     return 0;
 }
