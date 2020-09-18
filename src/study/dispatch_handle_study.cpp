@@ -31,6 +31,7 @@ namespace Exa1 {
     class Msg1 : public Message {
     public:
         void dispatchIml(Handler* handler) override {
+            // same
             handler->handle(this);
         }
     };
@@ -38,6 +39,7 @@ namespace Exa1 {
     class Msg2 : public Message {
     public:
         void dispatchIml(Handler* handler) override {
+            // same
             handler->handle(this);
         }
     };
@@ -53,6 +55,60 @@ namespace Exa1 {
 }
 
 namespace Exa2 {
+    class Msg1;
+    class Msg2;
+
+    class Handler {
+    public:
+        void handle(Msg1* msg) {
+            std::cout << "msg-1 handle" << std::endl;
+        }
+
+        void handle(Msg2* msg) {
+            std::cout << "msg-2 handle" << std::endl;
+        }
+    };
+
+    class Message {
+    public:
+        virtual ~Message() = default;
+
+    public:
+        void dispatch(Handler* handler) {
+            dispatch_impl(handler);
+        }
+
+    protected:
+        virtual void dispatch_impl(Handler* handler) = 0;
+    };
+
+    template<class DerivedMsgT>
+    class MsgBase : public Message{
+    protected:
+        void dispatch_impl(Handler* handler) override {
+            handler->handle(static_cast<DerivedMsgT*>(this));
+        }
+    };
+
+    struct Msg1 : public MsgBase<Msg1> {
+        // ...
+    };
+
+    struct Msg2 : public MsgBase<Msg2> {
+        // ...
+    };
+
+    void run() {
+        auto handler = new Handler{};
+        Message* message = new Msg1{};
+        message->dispatch(handler);
+
+        delete message;
+        delete handler;
+    }
+}
+
+namespace Exa3 {
     class Handler;
 
     // msg interface
@@ -119,6 +175,7 @@ namespace Exa2 {
 int main() {
     //Exa1::run();
     Exa2::run();
+    //Exa3::run();
 
     return 0;
 }
