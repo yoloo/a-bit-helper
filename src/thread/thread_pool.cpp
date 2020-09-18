@@ -31,6 +31,10 @@ ThreadPool::ThreadPool(size_t threads) : pool_stop_(false) {
 }
 
 ThreadPool::~ThreadPool() {
+    this->final();
+}
+
+void ThreadPool::final() {
     // Set pool stop and notify all threads.
     {
         std::unique_lock<std::mutex> lock(this->mutex_);
@@ -41,5 +45,5 @@ ThreadPool::~ThreadPool() {
 
     // Wait until work-thread done.
     for (auto& worker : work_threads_)
-       worker.join();
+        worker.join();
 }

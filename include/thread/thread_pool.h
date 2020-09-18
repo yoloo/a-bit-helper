@@ -46,6 +46,9 @@ public:
     explicit ThreadPool(size_t threads);
     virtual ~ThreadPool();
 
+public:
+    void final();
+
 private:
     std::vector<std::thread> work_threads_;
 
