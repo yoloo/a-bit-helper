@@ -1,5 +1,5 @@
-#ifndef __NET_H__
-#define __NET_H__
+#ifndef __NET_MSG_H__
+#define __NET_MSG_H__
 
 #include <sstream>
 
@@ -41,4 +41,4 @@ namespace AsioNet {
 
 }
 
-#endif//__NET_H__
+#endif//__NET_MSG_H__
